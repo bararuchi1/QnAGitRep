@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+<title>Home</title>
+<link rel="stylesheet" type="text/css"
+	href="resources/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="resources/css/stsyles.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+<script type="text/javascript"
+	src="resources/javascript/questionPatteren.js"></script>
+<script type="text/javascript" src="resources/javascript/jquery.min.js"></script>
+<script type="text/javascript"
+	src="resources/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body ng-app="qna" ng-controller="qnaPage1" ng-init="init()">
+
+
+	<form name="myQnAForm">
+		<div class="form-group col-md-2">
+			<select class="form-control"
+				ng-init="qType=qType || typeOfQuestion[0].key" ng-model="qType"
+				ng-options="q.key as q.value for q in typeOfQuestion"
+				ng-change="showNextDiv()">
+			</select>
+		</div>
+		<div ng-if="phase1Selected" class="col-md-2 form-group">
+			<label class="container">Multiple Answer <input
+				type="checkbox" ng-model="MAQ" ng-click="showNextCheckBox(MAQ)">
+				<span class="checkmark"></span>
+			</label> Number of Answer <input type="number" name="TotalQ"
+				ng-model="TotalQ" class="form-control" max="10" required> <span
+				ng-show="myQnAForm.TotalQ.$touched && myQnAForm.TotalQ.$invalid">Word
+				count can not be greater than 10.</span>
+			<!-- {{TotalQ}} -->
+		</div>
+		<!-- <div ng-if="true">
+	<label class="container">Multiple Answer
+		<input type="checkbox" ng-model="MAQ"  ng-click="showNextCheckBox(MAQ)">
+		<span class="checkmark"></span>
+	</label>
+	</div> -->
+		<div ng-if="comprehensive" class="col-md-2 form-group">
+			Word count <input type="number" name="totalWord" ng-model="totalWord"
+				class="form-control" max="5000" required> <span
+				ng-show="myQnAForm.totalWord.$touched &&  myQnAForm.totalWord.$invalid">Word
+				count can not be greater than 5000.</span>
+			<!-- {{totalWord}}<br>
+	{{myQnAForm.totalWord}}<br>
+	{{myQnAForm.totalWord.$viewValue}}<br> -->
+		</div>
+
+		<div ng-show="phase1Selected || comprehensive"
+			class="col-md-2 col-md-offset-2">
+			<input type="submit" name="createQ" class="btn btn-primary"
+				ng-disabled="myQnAForm.$invalid" ng-click="makeQuestionPatteren()">
+		</div>
+		<div>
+			<table>
+			<tr>
+			<td>{{qnaMessage.ErrMsg}}</td>
+			<td>{{qnaMessage.ErrCode}}</td>
+			<td>{{qnaMessage._id}}</td>
+			</tr>
+			</table>
+		</div>
+	</form>
+
+
+</body>
+
+</html>
